@@ -34,9 +34,8 @@ public class CreateBookingSteps {
 	@Then("the booking should be created successfully")
 	public void the_booking_should_be_created_successfully() {
 		Response response = context.getResponse();
-		response
-		.then()
-		.spec(ResponseSpecBuilderUtil.getBookingResponseSpec());
+		response.then()
+				.spec(ResponseSpecBuilderUtil.getBookingResponseSpec());
 
 		int bookingId = response.jsonPath().getInt("bookingid");
 		context.setBookingId(bookingId);
@@ -45,4 +44,12 @@ public class CreateBookingSteps {
 		CreateBookingResponse bookingResponse = response.then().extract().as(CreateBookingResponse.class);	
 		BookingAssertions.assertBookingMatches(payload, bookingResponse.getBooking());
 	}
+	
+	@Then("the API should return status code {int}")
+	public void the_api_should_return_status_code(int statusCode) {
+		Response response = context.getResponse();
+		response.then()
+				.statusCode(statusCode);
+	}
+
 }
