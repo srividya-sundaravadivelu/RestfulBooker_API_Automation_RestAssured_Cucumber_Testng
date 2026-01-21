@@ -2,7 +2,6 @@ package com.restfulbooker.hooks;
 
 import com.restfulbooker.api.BookingApi;
 import com.restfulbooker.context.TestContext;
-import com.restfulbooker.factory.RequestFactory;
 import com.restfulbooker.utils.ResponseSpecBuilderUtil;
 import com.restfulbooker.utils.TokenManager;
 
