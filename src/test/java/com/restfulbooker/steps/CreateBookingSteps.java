@@ -12,7 +12,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 
-public class CreateBookingSteps {	
+public class CreateBookingSteps {
 
 	private final TestContext context;
 	private BookingRequest payload;
@@ -27,29 +27,50 @@ public class CreateBookingSteps {
 		payload = JsonUtils.readJson("src/test/resources/testdata/" + filePath, BookingRequest.class);
 
 		Response response = BookingApi.createBooking(payload);
-		
+
 		context.setResponse(response);
 	}
 
 	@Then("the booking should be created successfully")
 	public void the_booking_should_be_created_successfully() {
 		Response response = context.getResponse();
-		response.then()
-				.spec(ResponseSpecBuilderUtil.getBookingResponseSpec());
+		response.then().spec(ResponseSpecBuilderUtil.getBookingResponseSpec());
 
 		int bookingId = response.jsonPath().getInt("bookingid");
 		context.setBookingId(bookingId);
 		System.out.println("Booking ID: " + bookingId);
-		
-		CreateBookingResponse bookingResponse = response.then().extract().as(CreateBookingResponse.class);	
+
+		CreateBookingResponse bookingResponse = response.then().extract().as(CreateBookingResponse.class);
 		BookingAssertions.assertBookingMatches(payload, bookingResponse.getBooking());
 	}
-	
+
 	@Then("the API should return status code {int}")
 	public void the_api_should_return_status_code(int statusCode) {
 		Response response = context.getResponse();
-		response.then()
-				.statusCode(statusCode);
+		response.then().statusCode(statusCode);
+	}
+
+	@When("I remove {string} from the booking payload {string} and send POST request to create booking")
+	public void i_remove_from_the_booking_payload_and_send_post_request_to_create_booking(String field,
+			String filePath) {
+		payload = JsonUtils.readJson("src/test/resources/testdata/" + filePath, BookingRequest.class);
+
+		switch (field) {
+		case "firstname":
+			payload.setFirstname(null);
+			break;
+		case "lastname":
+			payload.setLastname(null);
+			break;
+		case "bookingdates":
+			payload.setBookingdates(null);
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown field: " + field);
+		}
+
+		Response response = BookingApi.createBooking(payload);
+		context.setResponse(response);
 	}
 
 }

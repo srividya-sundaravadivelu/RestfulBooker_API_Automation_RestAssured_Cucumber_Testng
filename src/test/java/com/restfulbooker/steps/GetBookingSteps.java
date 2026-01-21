@@ -92,5 +92,19 @@ public class GetBookingSteps {
 			assert booking.getLastname().equals(expectedLastname) : "Lastname mismatch for bookingId " + bookingId;
 		}
 	}
+	
+	@Given("I create a booking with firstname {string} and lastname {string}")
+	public void i_create_a_booking_with_firstname_and_lastname(String firstname, String lastname) {
+
+		payload = JsonUtils.readJson("src/test/resources/testdata/booking.json", BookingRequest.class);
+		payload.setFirstname(firstname);
+		payload.setLastname(lastname);
+
+		Response response = BookingApi.createBooking(payload);
+
+		int bookingId = response.jsonPath().getInt("bookingid");
+		context.setBookingId(bookingId);
+	}
+
 
 }

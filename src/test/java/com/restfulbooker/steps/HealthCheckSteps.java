@@ -1,17 +1,13 @@
 package com.restfulbooker.steps;
 
-import static io.restassured.RestAssured.given;
-
 import com.restfulbooker.api.BookingApi;
 import com.restfulbooker.context.TestContext;
-import com.restfulbooker.factory.RequestFactory;
 import com.restfulbooker.utils.ResponseSpecBuilderUtil;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 
 public class HealthCheckSteps {
 
