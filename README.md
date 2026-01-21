@@ -28,6 +28,8 @@ This project demonstrates a full-fledged API automation framework for the Restfu
     
 10.  CI/CD ready with GitHub Actions
 
+11. Parallel testing with Testng @DataProvider(parallel=true)
+
 # Best Practices / What NOT to Do
 
 Avoid doing the following inside @Before or step definitions:
@@ -94,6 +96,20 @@ allure serve target/allure-results
 <img width="1877" height="916" alt="image" src="https://github.com/user-attachments/assets/65453c62-663f-462e-9a99-ae5e9f499335" />
 
 <img width="1915" height="919" alt="image" src="https://github.com/user-attachments/assets/bb2fcae2-549d-49a2-8ce9-df909bc576fc" />
+
+# Parallel Runs
+
+<img width="826" height="548" alt="image" src="https://github.com/user-attachments/assets/ef7d23ad-9ca1-42cd-8524-501510bdfb4d" />
+
+<img width="989" height="280" alt="image" src="https://github.com/user-attachments/assets/5dc86fa6-a8c7-4cfa-b133-79f7b2c6998f" />
+
+## Allure Report Timeline Showing Parallel Runs
+
+<img width="1919" height="915" alt="image" src="https://github.com/user-attachments/assets/a04cd67b-32ec-4828-ac23-df29881aeb09" />
+
+
+
+
 
 
 # Test Design Highlights
