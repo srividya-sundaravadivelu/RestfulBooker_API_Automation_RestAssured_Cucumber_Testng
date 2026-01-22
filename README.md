@@ -30,6 +30,10 @@ This project demonstrates a full-fledged API automation framework for the Restfu
 
 11. Parallel testing with Testng @DataProvider(parallel=true)
 
+12. End to End testing Scenario
+
+13. TestDataFactory - generates test payloads dynamically so feature files and step definitions don’t directly reference JSON files.
+
 # Best Practices / What NOT to Do
 
 Avoid doing the following inside @Before or step definitions:
@@ -41,6 +45,9 @@ Avoid doing the following inside @Before or step definitions:
 ❌ Share booking IDs across scenarios — each scenario creates and cleans its own data
 
 ❌ Depend on execution order — all scenarios are self-contained and independent
+
+❌ Use static variables for test data - each scenario creates, uses, and cleans up its own data
+
 
 # Project Structure
 
