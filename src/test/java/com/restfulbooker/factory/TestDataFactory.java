@@ -1,5 +1,6 @@
 package com.restfulbooker.factory;
 
+import com.restfulbooker.pojo.AuthRequest;
 import com.restfulbooker.pojo.BookingRequest;
 import com.restfulbooker.utils.JsonUtils;
 
@@ -51,8 +52,11 @@ public class TestDataFactory {
 	}
 
 	public static BookingRequest partialUpdateBooking() {
-		return JsonUtils.readJsonFromResources("partialUpdateBooking.json",
-				BookingRequest.class);
+		return JsonUtils.readJsonFromResources("partialUpdateBooking.json", BookingRequest.class);
+	}
+
+	public static AuthRequest validAuthPayload() {
+		return JsonUtils.readJsonFromResources("auth.json", AuthRequest.class);
 	}
 
 }

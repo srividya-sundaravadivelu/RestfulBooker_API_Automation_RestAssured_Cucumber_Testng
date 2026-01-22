@@ -1,6 +1,7 @@
 package com.restfulbooker.utils;
 
 import com.restfulbooker.api.BookingApi;
+import com.restfulbooker.factory.TestDataFactory;
 import com.restfulbooker.pojo.AuthRequest;
 
 import io.restassured.response.Response;
@@ -21,7 +22,7 @@ public class TokenManager {
 	}
 
 	private static String generateToken() {
-		AuthRequest authPayload = JsonUtils.readJson("src/test/resources/testdata/auth.json", AuthRequest.class);
+		AuthRequest authPayload = TestDataFactory.validAuthPayload();
 
 		Response response = BookingApi.createToken(authPayload);
 
