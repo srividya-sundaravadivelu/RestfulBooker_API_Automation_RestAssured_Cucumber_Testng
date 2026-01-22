@@ -16,8 +16,8 @@ public class GetBookingIdsSteps {
 		this.context = context;
 	}
 
-	@When("I send a GET request to fetch all booking IDs")
-	public void i_send_a_get_request_to_fetch_all_booking_i_ds() {
+	@When("I retrieve all booking IDs")
+	public void i_retrieve_all_booking_i_ds() {
 		Response response = BookingApi.getBookingIds();
 		context.setResponse(response);
 	}

@@ -7,5 +7,5 @@ Feature: Health Check API
 
   Scenario: Verify Restful Booker API health status
     Given the Restful Booker API is available
-    When I send a GET request to the health check endpoint
+    When I ping the health check endpoint
     Then the API health check should be successful

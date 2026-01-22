@@ -3,9 +3,9 @@ package com.restfulbooker.steps;
 import com.restfulbooker.api.BookingApi;
 import com.restfulbooker.assertions.BookingAssertions;
 import com.restfulbooker.context.TestContext;
+import com.restfulbooker.factory.TestDataFactory;
 import com.restfulbooker.pojo.BookingRequest;
 import com.restfulbooker.pojo.CreateBookingResponse;
-import com.restfulbooker.utils.JsonUtils;
 import com.restfulbooker.utils.ResponseSpecBuilderUtil;
 
 import io.cucumber.java.en.Then;
@@ -15,20 +15,22 @@ import io.restassured.response.Response;
 public class CreateBookingSteps {
 
 	private final TestContext context;
-	private BookingRequest payload;
 
 	public CreateBookingSteps(TestContext context) {
 		this.context = context;
 	}
 
-	@When("I send a POST request to create booking with data {string}")
-	public void i_send_a_post_request_to_create_booking_with_data(String filePath) {
+	@When("I create a booking with valid details")
+	public void i_create_a_booking_with_valid_details() {
 
-		payload = JsonUtils.readJson("src/test/resources/testdata/" + filePath, BookingRequest.class);
+		BookingRequest payload = TestDataFactory.createValidBooking();
+		context.setPayload(payload);
 
 		Response response = BookingApi.createBooking(payload);
 
 		context.setResponse(response);
+		int bookingId = response.jsonPath().getInt("bookingid");
+		context.setBookingId(bookingId);
 	}
 
 	@Then("the booking should be created successfully")
@@ -41,33 +43,18 @@ public class CreateBookingSteps {
 		System.out.println("Booking ID: " + bookingId);
 
 		CreateBookingResponse bookingResponse = response.then().extract().as(CreateBookingResponse.class);
-		BookingAssertions.assertBookingMatches(payload, bookingResponse.getBooking());
+		BookingAssertions.assertBookingMatches(context.getPayload(), bookingResponse.getBooking());
 	}
 
-	@Then("the API should return status code {int}")
-	public void the_api_should_return_status_code(int statusCode) {
+	@Then("the API should return error")
+	public void the_api_should_return_error() {
 		Response response = context.getResponse();
-		response.then().statusCode(statusCode);
+		response.then().statusCode(500);
 	}
 
-	@When("I remove {string} from the booking payload {string} and send POST request to create booking")
-	public void i_remove_from_the_booking_payload_and_send_post_request_to_create_booking(String field,
-			String filePath) {
-		payload = JsonUtils.readJson("src/test/resources/testdata/" + filePath, BookingRequest.class);
-
-		switch (field) {
-		case "firstname":
-			payload.setFirstname(null);
-			break;
-		case "lastname":
-			payload.setLastname(null);
-			break;
-		case "bookingdates":
-			payload.setBookingdates(null);
-			break;
-		default:
-			throw new IllegalArgumentException("Unknown field: " + field);
-		}
+	@When("I remove {string} from the booking payload and create booking")
+	public void i_remove_from_the_booking_payload_and_create_booking(String field) {
+		BookingRequest payload = TestDataFactory.createBookingWithMissingField(field);
 
 		Response response = BookingApi.createBooking(payload);
 		context.setResponse(response);

@@ -21,8 +21,8 @@ public class HealthCheckSteps {
 	public void the_restful_booker_api_is_available() {		
 	}
 
-	@When("I send a GET request to the health check endpoint")
-	public void i_send_a_get_request_to_the_health_check_endpoint() {
+	@When("I ping the health check endpoint")
+	public void i_ping_the_health_check_endpoint() {
 		Response response = BookingApi.ping();
 		context.setResponse(response);
 	}
